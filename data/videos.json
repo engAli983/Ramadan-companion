@@ -1,0 +1,161 @@
+[
+  {
+    "id": 1,
+    "title": "كيف تستقبل رمضان؟ - بداية جديدة",
+    "thumbnail": "https://img.youtube.com/vi/kY-aK66dfT8/maxresdefault.jpg",
+    "duration": "13:37",
+    "url": "https://www.youtube.com/watch?v=kY-aK66dfT8",
+    "category": "reminder"
+  },
+  {
+    "id": 2,
+    "title": "هل السواك يفطر؟ (دقيقة فقه)",
+    "thumbnail": "https://img.youtube.com/vi/cMIYivEKbXE/maxresdefault.jpg",
+    "duration": "00:42",
+    "url": "https://www.youtube.com/watch?v=cMIYivEKbXE",
+    "category": "fiqh",
+    "isShort": true
+  },
+  {
+    "id": 3,
+    "title": " أخطاء شائعة في الصيام",
+    "thumbnail": "https://img.youtube.com/vi/IOyLLGZ_ytE/maxresdefault.jpg",
+    "duration": "34:58",
+    "url": "https://www.youtube.com/watch?v=IOyLLGZ_ytE&t=580s",
+    "category": "mistakes"
+  },
+  {
+    "id": 4,
+    "title": "فضل العشر الأواخر وليلة القدر",
+    "thumbnail": "https://img.youtube.com/vi/1JZLbwD3Qm0/maxresdefault.jpg",
+    "duration": "15:33",
+    "url": "https://www.youtube.com/watch?v=1JZLbwD3Qm0",
+    "category": "last10"
+  },
+  {
+    "id": 5,
+    "title": "كيف نصلي صلاة التراويح في البيت؟",
+    "thumbnail": "https://img.youtube.com/vi/EcrNKfcQJt0/hqdefault.jpg",
+    "duration": "07:47",
+    "url": "https://www.youtube.com/watch?v=EcrNKfcQJt0",
+    "category": "worship"
+  },
+  {
+    "id": 6,
+    "title": "دعاء يبكي القلوب",
+    "thumbnail": "https://img.youtube.com/vi/skyxlNEXISo/hqdefault.jpg",
+    "duration": "08:23",
+    "url": "https://www.youtube.com/watch?v=skyxlNEXISo",
+    "category": "reminder",
+    "isShort": false
+  },
+  {
+    "id": 7,
+    "title": "حكم قطرة العين (فقه سريع)",
+    "thumbnail": "https://img.youtube.com/vi/9TtUFVtNQnw/hqdefault.jpg",
+    "duration": "00:35",
+    "url": "https://www.youtube.com/watch?v=9TtUFVtNQnw",
+    "category": "fiqh",
+    "isShort": true
+  },
+  {
+    "id": 8,
+    "title": "جدول مقترح لاغتنام رمضان",
+    "thumbnail": "https://img.youtube.com/vi/rqVJhNe8ZB4/hqdefault.jpg",
+    "duration": "8:05",
+    "url": "https://www.youtube.com/watch?v=rqVJhNe8ZB4",
+    "category": "reminder"
+  },
+  {
+    "id": 9,
+    "title": "هل النوم يفسد الصيام؟",
+    "thumbnail": "https://img.youtube.com/vi/LvA2vpdgnhk/hqdefault.jpg",
+    "duration": "01:18",
+    "url": "https://www.youtube.com/watch?v=LvA2vpdgnhk",
+    "category": "mistakes",
+    "isShort": true
+  },
+  {
+    "id": 10,
+    "title": "أدعية مؤثرة لليلة القدر",
+    "thumbnail": "https://img.youtube.com/vi/9Io-kVDZ44I/hqdefault.jpg",
+    "duration": "28:33",
+    "url": "https://www.youtube.com/watch?v=9Io-kVDZ44I",
+    "category": "last10"
+  },
+  {
+    "id": 11,
+    "title": "معنى العتق من النار",
+    "thumbnail": "https://img.youtube.com/vi/G9Lcm6dvWg8/hqdefault.jpg",
+    "duration": "00:59",
+    "url": "https://www.youtube.com/watch?v=G9Lcm6dvWg8",
+    "category": "reminder"
+  },
+  {
+    "id": 12,
+    "title": "كيفية الخشوع في الصلاة",
+    "thumbnail": "https://img.youtube.com/vi/ehTr5irkU6M/hqdefault.jpg",
+    "duration": "04:58",
+    "url": "https://www.youtube.com/watch?v=ehTr5irkU6M",
+    "category": "worship"
+  },
+  {
+    "id": 13,
+    "title": "كيف تبدأ الالتزام خطوة بخطوة؟",
+    "thumbnail": "https://img.youtube.com/vi/MFLHYRtXjSE/maxresdefault.jpg",
+    "duration": "06:11",
+    "url": "https://www.youtube.com/watch?v=MFLHYRtXjSE",
+    "category": "beginners"
+  },
+  {
+    "id": 14,
+    "title": "كيف تتوب توبة صادقة؟",
+    "thumbnail": "https://img.youtube.com/vi/vE_E3IC61Go/hqdefault.jpg",
+    "duration": "07:26",
+    "url": "https://www.youtube.com/watch?v=vE_E3IC61Go",
+    "category": "repentance"
+  },
+  {
+    "id": 15,
+    "title": "لماذا لا تتغير رغم الطاعة؟",
+    "thumbnail": "https://img.youtube.com/vi/LxSwWwBCuHY/hqdefault.jpg",
+    "duration": "11:00",
+    "url": "https://www.youtube.com/watch?v=LxSwWwBCuHY",
+    "category": "repentance"
+  },
+  {
+    "id": 16,
+    "title": "التوبة… قبل فوات الأوان",
+    "thumbnail": "https://img.youtube.com/vi/Rb5TsUk_Of0/hqdefault.jpg",
+    "duration": "09:37",
+    "url": "https://www.youtube.com/watch?v=Rb5TsUk_Of0",
+    "category": "repentance"
+  },
+  {
+    "id": 17,
+    "title": "لماذا لا نشعر بلذة العبادة؟",
+    "thumbnail": "https://img.youtube.com/vi/WGBGk2eNhzU/hqdefault.jpg",
+    "duration": "01:52",
+    "url": "https://www.youtube.com/watch?v=WGBGk2eNhzU",
+    "category": "intention",
+    "isShort": true
+  },
+  {
+    "id": 18,
+    "title": "دعاء خاشع مبكي يقرع القلوب",
+    "thumbnail": "https://img.youtube.com/vi/5Bs1D98tetU/hqdefault.jpg",
+    "duration": "13:04",
+    "url": "https://www.youtube.com/watch?v=5Bs1D98tetU",
+    "category": "intention",
+    "isShort": true
+  },
+  {
+    "id": 18,
+    "title": "خطب الشيخ احمد العزب",
+    "thumbnail": "https://img.youtube.com/vi/CBT-FigaU0U/hqdefault.jpg",
+    "duration": "21:40:18",
+    "url": "https://www.youtube.com/playlist?list=PLD-tRLG3gV23cdyWLEkRCjpq4hcHw7uVJ",
+    "category": "worship",
+    "isShort": false
+  }
+]

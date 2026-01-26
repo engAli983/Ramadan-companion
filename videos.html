@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفيق رمضان | مرئيات ومواعظ</title>
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lateef&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="container">
+        <header class="text-center mt-4 mb-4">
+            <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+            <h1>زاد الصائم</h1>
+            <p class="text-muted">شاهد، تعلم، وازدد إيماناً</p>
+        </header>
+
+        <!-- 1. Hero Section: Video of the Day -->
+        <section id="video-of-day-section" class="mb-5 fade-in">
+            <h2 class="section-title">🔥 فيديو اليوم</h2>
+            <div id="hero-video-container">
+                <!-- Injected via JS -->
+                <div class="skeleton-loader" style="height: 250px; border-radius: 15px;"></div>
+            </div>
+        </section>
+
+        <!-- 2. Quick Filters -->
+        <section id="quick-filters" class="mb-4 slider-container">
+            <div class="filters-scroll">
+                <button class="filter-chip active" data-filter="all">الكل</button>
+                <button class="filter-chip" data-filter="fiqh">📚 فقه سريع</button>
+                <button class="filter-chip" data-filter="mistakes">⚠️ أخطاء شائعة</button>
+                <button class="filter-chip" data-filter="reminder">🤍 تذكير</button>
+                <button class="filter-chip" data-filter="worship">🤲 كيفية العبادة</button>
+                <button class="filter-chip special-chip" data-filter="last10">🌙 العشر الأواخر</button>
+            </div>
+        </section>
+
+        <!-- 3. Short Videos (Horizontal Scroll) -->
+        <section id="shorts-section" class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="section-title mb-0">⚡ دقائق إيمانية</h2>
+                <span class="text-muted" style="font-size: 0.9rem;">فيديوهات قصيرة</span>
+            </div>
+            
+            <div class="horizontal-scroll-wrapper" id="shorts-container">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- 4. Seasonal: Last 10 Days (Hidden by default, shown via JS logic) -->
+        <section id="seasonal-section" class="mb-5 hidden">
+            <div class="seasonal-card">
+                <div class="seasonal-content text-center">
+                    <h2 class="seasonal-title">🌙 العشر الأواخر</h2>
+                    <p class="seasonal-subtitle">اغتنم أفضل ليالي العام</p>
+                    <div id="seasonal-videos-grid" class="mt-4 video-grid-compact">
+                         <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. All Videos Library -->
+        <section id="library-section">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h2 class="section-title mb-0">📚 المكتبة المرئية</h2>
+                
+                <div class="library-controls">
+                    <input type="text" id="video-search" placeholder="🔍 بحث..." class="form-input form-input-sm">
+                    <select id="video-sort" class="form-input form-input-sm">
+                        <option value="newest">الأحدث</option>
+                        <option value="shortest">الأقصر</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="videos-grid" class="video-grid">
+                <!-- Injected via JS -->
+                 <p class="text-muted text-center w-100">جاري تحميل المكتبة...</p>
+            </div>
+        </section>
+
+        <div style="height: 100px;"></div>
+    </main>
+
+    <!-- Navigation -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V9.75M8.25 21h8.25" /></svg>
+            <span>الرئيسية</span>
+        </a>
+        <a href="wird.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+            <span>الورد</span>
+        </a>
+        <a href="hadith.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>
+            <span>حديث</span>
+        </a>
+        <a href="qa.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
+            <span>فتاوى</span>
+        </a>
+        <a href="videos.html" class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" /></svg>
+            <span>مرئيات</span>
+        </a>
+        <!-- Zakat removed from main nav per videos page request or kept? User didn't ask to remove but videos page usually is last item or similar. I'll stick to common layout or as per prev files. 
+             Wait, prev layout had 5 items: Home, Wird, Hadith, QA, Zakat ... and videos was separate or somewhere else?
+             Looking at task.md, user had "Videos Page" item 15. The nav usually has 5 items. 
+             If adding videos to nav, Zakat might be pushed out or I replace one.
+             Actually the user previously had Videos page in task list.
+             I will replace Zakat in this specific page's nav to show it's active.
+             Wait, the user sees "zakat.html" is open. I should probably keep consistency. 
+             Let's check index.html nav to be consistent if I can, but for now I'll just add Videos as the active item.
+        -->
+    </nav>
+
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/videos.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

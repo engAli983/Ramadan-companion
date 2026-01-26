@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفيق رمضان | قصص وعبر</title>
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .story-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .badge-prophets { background: #e0f2fe; color: #0284c7; }
+        .badge-prophet_life { background: #fce7f3; color: #db2777; }
+        .badge-companions { background: #fef9c3; color: #ca8a04; }
+        .badge-sermons { background: #dcfce7; color: #16a34a; }
+        
+        .story-card {
+            text-align: right;
+        }
+        
+        .story-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .story-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            color: #334155;
+        }
+        
+        .story-lesson {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 1.2rem;
+            border-radius: 12px;
+            border-right: 4px solid var(--color-primary);
+            margin: 1.5rem 0;
+        }
+        
+        .story-lesson-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .story-lesson-text {
+            color: #78350f;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .story-source {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .category-filter {
+            display: inline-flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <header class="text-center mt-4 mb-4">
+            <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+            <h1>📖 قصص وعبر</h1>
+            <p class="text-muted">قصص الأنبياء والرسول والصحابة والمواعظ</p>
+        </header>
+
+        <section id="category-tabs" class="mb-4 text-center">
+            <div class="category-filter">
+                <button class="btn btn-secondary cat-btn active" onclick="selectCategory('all')" id="btn-all">📚 الكل</button>
+                <button class="btn btn-secondary cat-btn" onclick="selectCategory('prophets')" id="btn-prophets">🕌 الأنبياء</button>
+                <button class="btn btn-secondary cat-btn" onclick="selectCategory('prophet_life')" id="btn-prophet_life">🌟 الرسول</button>
+                <button class="btn btn-secondary cat-btn" onclick="selectCategory('companions')" id="btn-companions">👥 الصحابة</button>
+                <button class="btn btn-secondary cat-btn" onclick="selectCategory('sermons')" id="btn-sermons">💡 مواعظ</button>
+            </div>
+            <style>
+                .cat-btn.active {
+                    background-color: var(--color-primary);
+                    color: white;
+                    border-color: var(--color-primary);
+                }
+            </style>
+        </section>
+
+        <section id="story-display-area">
+            <div class="card story-card fade-in" id="current-story-card">
+                <div id="story-badge-container"></div>
+                
+                <h2 class="story-title" id="story-title">
+                    اختر قسماً لعرض القصص
+                </h2>
+
+                <div class="story-content quran-text" id="story-content">
+                    <!-- Story content will appear here -->
+                </div>
+
+                <div class="story-lesson" id="story-lesson-container">
+                    <div class="story-lesson-title">💎 العبرة من القصة:</div>
+                    <div class="story-lesson-text" id="story-lesson">...</div>
+                </div>
+
+                <div class="story-source" id="story-source">
+                    <!-- Source will appear here -->
+                </div>
+
+                <div class="mt-4" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" style="flex: 2;" onclick="nextStoryInCurrentCategory()">
+                        🔁 قصة أخرى
+                    </button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="copyCurrentStory()">
+                        📋 نسخ
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div style="height: 100px;"></div>
+    </main>
+
+    <!-- Navigation -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+            <span>الرئيسية</span>
+        </a>
+        <a href="quran_audio.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+            </svg>
+            <span>تلاوات</span>
+        </a>
+        <a href="wird.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+            <span>الورد</span>
+        </a>
+        <a href="hadith.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>
+            <span>حديث</span>
+        </a>
+        <a href="stories.html" class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+            <span>قصص</span>
+        </a>
+        <a href="qa.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
+            <span>فتاوى</span>
+        </a>
+        <a href="zakat.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>زكاة</span>
+        </a>
+    </nav>
+
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+        
+        let storiesData = [];
+        let currentCategory = 'all';
+        let currentStoryId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            storiesData = await App.fetchData('stories.json');
+            if(storiesData && storiesData.length > 0) {
+                selectCategory('all');
+            }
+        });
+
+        function selectCategory(cat) {
+            currentCategory = cat;
+            
+            // Update UI Buttons
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${cat}`);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            // Render first story from category
+            nextStoryInCurrentCategory();
+        }
+
+        function nextStoryInCurrentCategory() {
+            if (!storiesData || storiesData.length === 0) {
+                document.getElementById('story-title').textContent = "لا توجد قصص متاحة حالياً.";
+                return;
+            }
+
+            // Filter by category
+            let filteredStories = storiesData;
+            if (currentCategory !== 'all') {
+                filteredStories = storiesData.filter(s => s.category === currentCategory);
+            }
+
+            if (filteredStories.length === 0) {
+                document.getElementById('story-title').textContent = "لا توجد قصص في هذا القسم حالياً.";
+                document.getElementById('story-content').textContent = "";
+                document.getElementById('story-lesson').textContent = "";
+                return;
+            }
+
+            // Get random story (different from current)
+            let random;
+            let attempts = 0;
+            do {
+                random = filteredStories[Math.floor(Math.random() * filteredStories.length)];
+                attempts++;
+            } while (random.id === currentStoryId && attempts < 20 && filteredStories.length > 1);
+
+            renderStory(random);
+        }
+
+        function renderStory(story) {
+            currentStoryId = story.id;
+            const card = document.getElementById('current-story-card');
+            
+            // Update title
+            document.getElementById('story-title').textContent = story.title;
+            
+            // Update content
+            document.getElementById('story-content').textContent = story.content;
+            
+            // Update lesson
+            document.getElementById('story-lesson').textContent = story.lesson;
+            
+            // Update source
+            if (story.source) {
+                document.getElementById('story-source').innerHTML = `<strong>📚 المصدر:</strong> ${story.source}`;
+            } else {
+                document.getElementById('story-source').innerHTML = "";
+            }
+            
+            // Update badge
+            const badgeContainer = document.getElementById('story-badge-container');
+            const catName = getCategoryName(story.category);
+            const badgeClass = getCategoryClass(story.category);
+            badgeContainer.innerHTML = `<span class="story-badge ${badgeClass}">${catName}</span>`;
+            
+            // Animation
+            card.classList.remove('fade-in');
+            void card.offsetWidth; 
+            card.classList.add('fade-in');
+        }
+
+        function copyCurrentStory() {
+            const title = document.getElementById('story-title').textContent;
+            const content = document.getElementById('story-content').textContent;
+            const lesson = document.getElementById('story-lesson').textContent;
+            const text = `${title}\n\n${content}\n\n💎 العبرة من القصة:\n${lesson}`;
+            navigator.clipboard.writeText(text).then(() => App.showNotification('تم نسخ القصة'));
+        }
+
+        function getCategoryName(cat) {
+            const map = {
+                'prophets': '🕌 قصص الأنبياء',
+                'prophet_life': '🌟 قصص الرسول',
+                'companions': '👥 قصص الصحابة',
+                'sermons': '💡 مواعظ'
+            };
+            return map[cat] || cat;
+        }
+
+        function getCategoryClass(cat) {
+            const map = {
+                'prophets': 'badge-prophets',
+                'prophet_life': 'badge-prophet_life',
+                'companions': 'badge-companions',
+                'sermons': 'badge-sermons'
+            };
+            return map[cat] || '';
+        }
+    </script>
+</body>
+</html>

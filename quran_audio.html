@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رفيق رمضان | تلاوات خاشعة</title>
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#0f766e">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lateef&family=Tajawal:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/quran_audio.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="quran-audio-header">
+      <!-- <a href="index.html" class="back-btn">↩ الرئيسية</a> -->
+      <div class="header-content">
+        <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        <h1>📖 القرآن الكريم</h1>
+        <p>استمع لآيات الله بخشوع وطمأنينة</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- 2. Featured Ayah (Ayah of the Day) -->
+      <section class="featured-ayah-section fade-in-up">
+        <div class="ayah-card-audio">
+          <div class="ayah-header">
+            <span class="badge">آية اليوم</span>
+            <h3 id="dailySurahName">سورة ...</h3>
+          </div>
+          <div class="ayah-body">
+            <p id="dailyAyahText" class="quran-text">جاري التحميل...</p>
+            <div class="audio-controls-minimal">
+              <button id="playDailyAyah" class="btn-circle">▶️</button>
+              <audio id="dailyAudioPlayer" hidden></audio>
+            </div>
+          </div>
+          <div class="ayah-footer">
+            <button id="refreshDailyAyah" class="btn-text">🔄 آية أخرى</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Quick Access (Surah Cards) -->
+      <section class="quick-access-section fade-in-up delay-1">
+        <h2>✨ سور يستحب سماعها</h2>
+        <div class="surah-grid">
+          <!-- Cards will be generated here or static -->
+          <div class="surah-card" onclick="playSurah(1)">
+            <div class="surah-icon">📿</div>
+            <div class="surah-info">
+              <h4>الفاتحة</h4>
+              <span>مكية • 7 آيات</span>
+            </div>
+            <button class="btn-play-sm">▶️</button>
+          </div>
+
+          <div class="surah-card" onclick="playSurah(18)">
+            <div class="surah-icon">🕌</div>
+            <div class="surah-info">
+              <h4>الكهف</h4>
+              <span>مكية • 110 آية</span>
+            </div>
+            <button class="btn-play-sm">▶️</button>
+          </div>
+
+          <div class="surah-card" onclick="playSurah(36)">
+            <div class="surah-icon">❤️</div>
+            <div class="surah-info">
+              <h4>يس</h4>
+              <span>مكية • 83 آية</span>
+            </div>
+            <button class="btn-play-sm">▶️</button>
+          </div>
+
+          <div class="surah-card" onclick="playSurah(67)">
+            <div class="surah-icon">👑</div>
+            <div class="surah-info">
+              <h4>الملك</h4>
+              <span>مكية • 30 آية</span>
+            </div>
+            <button class="btn-play-sm">▶️</button>
+          </div>
+
+          <div class="surah-card" onclick="playSurah(55)">
+            <div class="surah-icon">🌴</div>
+            <div class="surah-info">
+              <h4>الرحمن</h4>
+              <span>مدنية • 78 آية</span>
+            </div>
+            <button class="btn-play-sm">▶️</button>
+          </div>
+
+          <div class="surah-card" onclick="playSurah(56)">
+            <div class="surah-icon">🌌</div>
+            <div class="surah-info">
+              <h4>الواقعة</h4>
+              <span>مكية • 96 آية</span>
+            </div>
+            <button class="btn-play-sm">▶️</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Full Surah Listener (Main Feature) -->
+      <section
+        id="mainPlayerSection"
+        class="main-player-section fade-in-up delay-2"
+      >
+        <div class="player-box">
+          <div class="player-header">
+            <h2>🎧 استمع لسورة كاملة</h2>
+          </div>
+
+          <div class="selectors-row">
+            <div class="select-group">
+              <label>القارئ</label>
+              <select id="reciterSelect">
+                <option value="" disabled selected>
+                  ... جاري تحميل القراء
+                </option>
+                <!-- Options injected by JS -->
+              </select>
+            </div>
+            <div class="select-group">
+              <label>السورة</label>
+              <select id="surahSelect">
+                <option value="" disabled selected>اختر السورة</option>
+                <!-- Options injected by JS -->
+              </select>
+            </div>
+          </div>
+
+          <div class="audio-interface hidden" id="audioInterface">
+            <div class="track-info">
+              <h3 id="currentSurahDisplay">سورة ...</h3>
+              <p id="currentReciterDisplay">القارئ ...</p>
+            </div>
+
+            <audio
+              id="mainAudioPlayer"
+              controls
+              class="full-width-audio"
+            ></audio>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Featured Reciters (Optional) -->
+      <!-- <section class="reciters-section fade-in-up delay-3">
+        <h2>🎙️ قراء مميزون</h2>
+        <div class="reciters-grid" id="featuredReciters"> -->
+      <!-- Injected via JS -->
+      <!-- </div>
+      </section> -->
+
+      <!-- 7. Footer -->
+      <footer class="simple-footer">
+        <p>سبحان الله وبحمده، سبحان الله العظيم</p>
+      </footer>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bottom">
+      <a href="index.html" class="nav-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          />
+        </svg>
+        <span>الرئيسية</span>
+      </a>
+      <a href="quran_audio.html" class="nav-item active">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+          />
+        </svg>
+        <span>تلاوات</span>
+      </a>
+      <a href="wird.html" class="nav-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+          />
+        </svg>
+        <span>الورد</span>
+      </a>
+      <a href="hadith.html" class="nav-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+          />
+        </svg>
+        <span>حديث</span>
+      </a>
+      <a href="qa.html" class="nav-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+          />
+        </svg>
+        <span>فتاوى</span>
+      </a>
+      <a href="zakat.html" class="nav-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>زكاة</span>
+      </a>
+    </nav>
+
+    <script src="js/storage.js"></script>
+    <script src="js/prayers.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/quran_audio.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+  </body>
+</html>

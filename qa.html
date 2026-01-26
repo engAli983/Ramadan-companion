@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفيق رمضان | فتاوى الصيام</title>
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#0f766e">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .ruling-yes { color: var(--color-danger); font-weight: bold; }
+        .ruling-no { color: var(--color-success); font-weight: bold; }
+        .ruling-maybe { color: var(--color-secondary); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <header class="text-center mt-4 mb-4">
+            <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+            <h1>سؤال وجواب</h1>
+            <p class="text-muted">هل يفسد الصيام؟</p>
+        </header>
+        
+        <div class="card p-4">
+            <input type="text" id="qa-search" class="form-input" placeholder="ابحث عن مسألة... (مثل: معجون، إبرة)" onkeyup="filterQA()">
+        </div>
+
+        <section id="qa-container">
+            <!-- Questions loaded here -->
+            <div class="text-center">جاري التحميل...</div>
+        </section>
+
+        <div style="height: 100px;"></div>
+    </main>
+
+    <!-- Navigation -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+            <span>الرئيسية</span>
+        </a>
+        <a href="quran_audio.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+            </svg>
+            <span>تلاوات</span>
+        </a>
+        <a href="wird.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+            <span>الورد</span>
+        </a>
+        <a href="hadith.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>
+            <span>حديث</span>
+        </a>
+        <a href="stories.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+            <span>قصص</span>
+        </a>
+        <a href="qa.html" class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
+            <span>فتاوى</span>
+        </a>
+        <a href="zakat.html" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>زكاة</span>
+        </a>
+    </nav>
+
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+        
+        let qaList = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            qaList = await App.fetchData('qa.json');
+            renderQA(qaList);
+        });
+
+        function renderQA(list) {
+            const container = document.getElementById('qa-container');
+            container.innerHTML = '';
+
+            if(list.length === 0) {
+                container.innerHTML = '<p class="text-center">لا توجد نتائج.</p>';
+                return;
+            }
+
+            list.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'card accordion-item';
+                div.style.marginBottom = '0.5rem';
+                div.innerHTML = `
+                    <button class="accordion-header" onclick="toggleAccordion(${index})">
+                        <span>${item.question}</span>
+                        <span>+</span>
+                    </button>
+                    <div class="accordion-content" id="acc-${index}">
+                        <p class="mb-4"><strong>الحكم:</strong> <span class="${getRulingClass(item.ruling)}">${item.ruling}</span></p>
+                        <p class="mb-4 text-muted">${item.reason}</p>
+                        <p style="font-size: 0.8rem; color: #94a3b8;">⚠️ ${item.disclaimer}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleAccordion(index) {
+            const content = document.getElementById(`acc-${index}`);
+            content.classList.toggle('show');
+            // Toggle icon if needed
+        }
+
+        function getRulingClass(text) {
+            if(text.includes('لا يفطر')) return 'ruling-no';
+            if(text.includes('يفطر')) return 'ruling-yes';
+            return 'ruling-maybe';
+        }
+
+        function filterQA() {
+            const query = document.getElementById('qa-search').value.toLowerCase();
+            const filtered = qaList.filter(item => 
+                item.question.toLowerCase().includes(query) || 
+                item.reason.toLowerCase().includes(query)
+            );
+            renderQA(filtered);
+        }
+    </script>
+</body>
+</html>
