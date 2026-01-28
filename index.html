@@ -13,6 +13,7 @@
       <!-- Header -->
       <header class="text-center mt-4 mb-4">
         <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        <button id="notify-test-btn" aria-label="Test Notifications" style="border: none; background: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
         <h1>رفيق رمضان</h1>
         <p class="text-muted">رفيقك اليومي للعبادة والصفاء</p>
         <div class="d-flex justify-content-center gap-2 mt-2">
@@ -264,7 +265,23 @@
     <script src="js/storage.js"></script>
     <script src="js/prayers.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/main.js"></script>
     <script>
+      // Test Notification Button Logic
+      document.getElementById('notify-test-btn').addEventListener('click', () => {
+          if (Notification.permission === 'granted') {
+              App.sendNotification("اختبار التنبيهات", "نظام التنبيهات يعمل بنجاح!");
+          } else if (Notification.permission !== 'denied') {
+              Notification.requestPermission().then(permission => {
+                  if (permission === 'granted') {
+                      App.sendNotification("تم التفعيل", "شكراً لتفعيل التنبيهات.");
+                  }
+              });
+          } else {
+              alert("التنبيهات محظورة. يرجى تفعيلها من إعدادات المتصفح.");
+          }
+      });
+
       // Register Service Worker for PWA
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

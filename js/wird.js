@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initWird() {
     setupKhatmaSelect();
+    
+    // Attempt rollover check immediately, but retry if prayers aren't loaded
+    checkAndPerformRollover();
+    
+    // Also re-check periodically (e.g. every minute) or rely on main loop
+    setInterval(checkAndPerformRollover, 60000);
+
     calculateAndRenderWird();
 }
 
@@ -271,4 +278,83 @@ function resetWird() {
 
 function openQuran() {
     window.location.href = 'quran.html';
+}
+
+/**
+ * LOGIC: Wird Rollover
+ * Rule: Day changes 10 minutes before Fajr.
+ */
+function checkAndPerformRollover() {
+    // 1. Get Fajr Time
+    if (!window.PrayerManager) return; // Wait for module
+    const fajrDate = PrayerManager.getFajrDate();
+    
+    // If we can't get Fajr yet (e.g. data fetching), skip silently
+    if (!fajrDate) {
+        setTimeout(checkAndPerformRollover, 2000); // Retry soon
+        return;
+    }
+
+    const now = new Date();
+    
+    // 2. Calculate "Current Wired Date" STRING (YYYY-MM-DD)
+    // If Now >= Fajr - 10mins  => Date is Today
+    // Else => Date is Yesterday
+    
+    const cutoffTime = new Date(fajrDate);
+    cutoffTime.setMinutes(cutoffTime.getMinutes() - 10); // 10 mins before Fajr
+
+    let currentWirdDateObj = new Date();
+    if (now < cutoffTime) {
+        // Still "Yesterday" for Wird purposes (e.g. user up late at night before Fajr)
+        currentWirdDateObj.setDate(currentWirdDateObj.getDate() - 1);
+    }
+    const currentWirdDateStr = currentWirdDateObj.toDateString();
+
+    // 3. Compare with Stored Date
+    const storedDateStr = Storage.getLastWirdDate();
+
+    // 4. Initial Case (First Run ever)
+    if (!storedDateStr) {
+        Storage.setLastWirdDate(currentWirdDateStr);
+        return;
+    }
+
+    // 5. Detect Change
+    if (currentWirdDateStr !== storedDateStr) {
+        console.log(`[Wird] Rollover Detected: ${storedDateStr} -> ${currentWirdDateStr}`);
+        
+        // PERFORM ROLLOVER
+        let progress = Storage.getWirdProgress();
+        
+        // Only increment if not completed? Or always?
+        // User Logic: "Uncheck everything, determine page count pages" 
+        // We assume we move to NEXT day regardless of completion to keep schedule
+        
+        // However, if we are in "Khatma" mode, pages are calculated by Day Index.
+        // So simply incrementing Day is correct.
+        
+        // Check if we are already finished though
+        if (!progress.completed && progress.day <= 30) {
+             // Optional: If missed previous day, warn? (handled in checkAndShowWarnings)
+        }
+        
+        // Update State
+        const newProgress = {
+            day: progress.day + 1,
+            completed: false, // Reset done status
+            prayersCompleted: [false, false, false, false, false], // Reset prayers
+            lastDate: new Date().toDateString() // Just for reference
+        };
+        
+        // Save
+        Storage.setWirdProgress(newProgress);
+        Storage.setLastWirdDate(currentWirdDateStr);
+        
+        // Notify
+        App.showNotification("📅 تم تحديث الورد لليوم الجديد.");
+        
+        // Re-render
+        calculateAndRenderWird();
+    }
 }

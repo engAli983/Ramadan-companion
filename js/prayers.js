@@ -15,6 +15,8 @@ const PrayerManager = {
     timings: null,
     hijriMonth: null, // Store current Hijri month number
     lastNotifiedPrayer: null, // Track last notification to avoid duplicates
+    lastPreNotifiedPrayer: null, // Track 15-min warning notification
+    
     
     init: async () => {
         await PrayerManager.fetchTimings();
@@ -154,6 +156,31 @@ const PrayerManager = {
                }
             }
 
+            // Pre-Adhan Notification (Window of 14-15 minutes before)
+            // 15 mins = 900000 ms. Let's trigger if between 15 and 14 mins left
+            if (diff > 840000 && diff <= 900000) {
+                 if (PrayerManager.lastPreNotifiedPrayer !== key) {
+                     const arabicName = {
+                       'Fajr': 'الفجر', 'Dhuhr': 'الظهر', 'Asr': 'العصر', 'Maghrib': 'المغرب', 'Isha': 'العشاء'
+                     }[key];
+
+                     let body = `اقترب موعد صلاة ${arabicName} (باقي 15 دقيقة)`;
+                     
+                     // Ramadan Specifics
+                     if (isRamadan && key === 'Maghrib') {
+                         body = `🌙 اقترب موعد الإفطار (باقي 15 دقيقة). جهز دعواتك!`;
+                     } else if (isRamadan && key === 'Fajr') {
+                         body = `⏳ اقترب موعد الإمساك (باقي 15 دقيقة). تسحروا فإن في السحور بركة.`;
+                     }
+
+                     if (window.App && App.sendNotification) {
+                         App.sendNotification(`اقترب وقت ${arabicName}`, body);
+                     }
+
+                     PrayerManager.lastPreNotifiedPrayer = key;
+                 }
+            }
+
             if (diff > 0 && diff < minDiff) {
                 minDiff = diff;
                 nextPrayer = pDate;
@@ -211,6 +238,18 @@ const PrayerManager = {
             const timerEl = document.getElementById('countdown-timer');
             if(timerEl) timerEl.textContent = str;
         }
+    },
+
+    // Helper: Get Today's Fajr Date Object
+    getFajrDate: () => {
+        if (!PrayerManager.timings) return null;
+        const fajrTime = PrayerManager.timings['Fajr']; // "HH:MM"
+        if (!fajrTime) return null;
+
+        const [h, m] = fajrTime.split(':').map(Number);
+        const date = new Date();
+        date.setHours(h, m, 0, 0);
+        return date;
     }
 };
 

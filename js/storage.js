@@ -11,7 +11,8 @@ const Storage = {
         KHATMA_COUNT: 'ramadan_khatma_count',
         LAST_VISIT: 'ramadan_last_visit',
         CACHED_AYAH: 'ramadan_daily_ayah',
-        CACHED_DHIKR: 'ramadan_daily_dhikr'
+        CACHED_DHIKR: 'ramadan_daily_dhikr',
+        WIRD_DATE: 'ramadan_wird_logical_date' // New key for the specific "10 min before Fajr" logic
     },
 
     // Save data
@@ -60,7 +61,10 @@ const Storage = {
 
     setDailyAyah: (ayahData) => Storage.set(Storage.KEYS.CACHED_AYAH, ayahData),
     getDailyAyah: () => Storage.get(Storage.KEYS.CACHED_AYAH),
-    
+
+    setLastWirdDate: (dateStr) => Storage.set(Storage.KEYS.WIRD_DATE, dateStr),
+    getLastWirdDate: () => Storage.get(Storage.KEYS.WIRD_DATE, null),
+        
     // Check if it's a new day
     isNewDay: () => {
         const lastDate = Storage.get(Storage.KEYS.LAST_VISIT);

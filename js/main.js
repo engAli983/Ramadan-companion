@@ -9,6 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("New Day Detected");
         // Reset daily specific states if needed
         Storage.updateLastVisit();
+        
+        // Notify for new Wird Start (if explicit "Start of Day" logic is desired)
+        // We defer slightly to ensure permissions are ready or user is settled
+        setTimeout(() => {
+            const progress = Storage.getWirdProgress();
+             // Logic: If it's a new day, progress might need reset or it's a fresh start
+             // Assuming Storage.isNewDay triggers resets elsewhere or we just remind them to open it
+            App.sendNotification(
+                "صباح الخير! ☀️", 
+                "يوم جديد، همة جديدة. لا تنس قراءة وردك اليومي من القرآن الكريم."
+            );
+        }, 5000);
     }
 
     // Helper to determine Ramadan Phase
@@ -302,26 +314,30 @@ document.addEventListener('DOMContentLoaded', () => {
          }, 5000); // Initial delay 5s
     }
 
-    // Wird Reminder Logic (Check every minute)
+    // Wird Reminder & Motivation Logic (Check every minute)
     setInterval(() => {
         const now = new Date();
         // Check if it's 11:00 PM (23:00) exactly (or within first minute)
         if (now.getHours() === 23 && now.getMinutes() === 0) {
              const progress = Storage.getWirdProgress();
-             
-             // If not completed today
-             if (!progress.completed) {
-                 // Check if we already notified today to avoid spam (using a session flag or parsing lastNotified)
-                 const lastReminded = sessionStorage.getItem('wird_reminder_sent');
-                 const todayStr = now.toDateString();
-                 
-                 if (lastReminded !== todayStr) {
+             const lastNotified = sessionStorage.getItem('wird_reminder_sent');
+             const todayStr = now.toDateString();
+
+             if (lastNotified !== todayStr) {
+                 if (!progress.completed) {
+                     // Incomplete Reminder
                      App.sendNotification(
                          "تذكير بالورد اليومي 📖", 
                          "باقي ساعة واحدة على نهاية اليوم. لا تنس قراءة وردك من القرآن الكريم."
                      );
-                     sessionStorage.setItem('wird_reminder_sent', todayStr);
+                 } else {
+                     // Completion Motivation
+                     App.sendNotification(
+                         "أحسنت! 🎉", 
+                         "لقد أتممت وردك اليوم بفضل الله. تقبل الله طاعتك وأدام عليك النور."
+                     );
                  }
+                 sessionStorage.setItem('wird_reminder_sent', todayStr);
              }
         }
     }, 60000); // Run every minute
